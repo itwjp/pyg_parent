@@ -1,6 +1,7 @@
 package com.pinyougou.sellergoods.service;
 
 import com.pinyougou.pojo.TbBrand;
+import com.pinyougou.utils.PageResult;
 
 import java.util.List;
 
@@ -21,4 +22,15 @@ public interface TbBrandService {
      * @date: 2020/1/19 12:20
      */
     List<TbBrand> findAll();
+
+    /**
+     * @param page:
+     * @param size:
+     * @return java.util.List<com.pinyougou.pojo.TbBrand>
+     * @Title: findPage
+     * @Description: 分页查询品牌
+     * @author: itXiaoKe
+     * @date: 2020/1/21 10:09
+     */
+    PageResult<TbBrand> findPage(int page, int size);
 }
