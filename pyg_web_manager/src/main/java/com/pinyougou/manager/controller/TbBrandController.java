@@ -62,4 +62,15 @@ public class TbBrandController {
             return new Result(false, "修改失败");
         }
     }
+
+    @RequestMapping("/deleteBrand/{selectIds}")
+    public Result deleteBrand(@PathVariable("selectIds") long[] longs) {
+        try {
+            tbBrandService.deleteBrand(longs);
+            return new Result(true, "删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "删除失败");
+        }
+    }
 }

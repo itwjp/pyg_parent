@@ -51,4 +51,14 @@ public interface TbBrandMapper {
      * @date: 2020/1/21 16:21
      */
     void updateBrand(TbBrand tbBrand);
+
+    /**
+     * @param aLong:
+     * @return void
+     * @Title: deleteBrand
+     * @Description: 删除品牌
+     * @author: itXiaoKe
+     * @date: 2020/1/21 17:14
+     */
+    void deleteBrand(long aLong);
 }

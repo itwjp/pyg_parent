@@ -63,4 +63,14 @@ public interface TbBrandService {
      * @date: 2020/1/21 16:21
      */
     void updateBrand(TbBrand tbBrand);
+
+    /**
+     * @param longs:
+     * @return void
+     * @Title: deleteBrand
+     * @Description: 删除品牌
+     * @author: itXiaoKe
+     * @date: 2020/1/21 17:13
+     */
+    void deleteBrand(long[] longs);
 }

@@ -16,4 +16,8 @@
     <update id="updateBrand" parameterType="tbBrand">
         update tb_brand set name = #{name},first_char = #{firstChar} where id = #{id}
     </update>
+
+    <delete id="deleteBrand" parameterType="long">
+        delete from tb_brand where id = #{id}
+    </delete>
 </mapper>

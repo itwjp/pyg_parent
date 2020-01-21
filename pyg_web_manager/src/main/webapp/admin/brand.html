@@ -67,6 +67,27 @@
                 $http.post('../brand/findSingleBrand/' + id).success(function (res) {
                     $scope.brand = res;
                 })
+            };
+
+            $scope.selectIds = [];
+            // 更新复选
+            $scope.updateSelection = function ($event, id) {
+                if ($event.target.checked) {    // 如果被选中，则增加到数组
+                    $scope.selectIds.push(id);
+                } else {
+                    var index = $scope.selectIds.indexOf(id);
+                    $scope.selectIds.splice(index, 1);  // 删除
+                }
+            };
+
+            $scope.delete = function () {
+                $http.get('../brand/deleteBrand/' + $scope.selectIds).success(function (res) {
+                    alert(res.message);
+                    if (res.success) {
+                        $scope.reloadList();
+                        $scope.selectIds=[];
+                    }
+                })
             }
         })
     </script>
@@ -90,7 +111,9 @@
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal" ng-click="brand = {}"
                             data-target="#editModal"><i class="fa fa-file-o"></i> 新建
                     </button>
-                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" ng-click="delete()" title="删除"><i
+                            class="fa fa-trash-o"></i> 删除
+                    </button>
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
                             class="fa fa-refresh"></i> 刷新
                     </button>
@@ -119,7 +142,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="brand in brandList">
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" ng-click="updateSelection($event,brand.id)"></td>
                 <td>{{brand.id}}</td>
                 <td>{{brand.name}}</td>
                 <td>{{brand.firstChar}}</td>
@@ -170,24 +193,3 @@
 
 </body>
 </html>
-<script type="text/javascript">
-
-
-// 添加品牌
-var brand = {};
-$scope.saveBrand = function () {
-    var methodName = "insertBrand";
-    if (null != $scope.brand.id) {
-        methodName = "updateBrand";
-    }
-
-    $http.post('../brand/' + methodName, $scope.brand).success(function (res) {
-        if (res.success) {
-            $scope.reloadList();
-        } else {
-            alert(res.message);
-        }
-    })
-};
-
-</script>

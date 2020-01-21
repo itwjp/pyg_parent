@@ -52,4 +52,11 @@ public class TbBrandServiceImpl implements TbBrandService {
     public void updateBrand(TbBrand tbBrand) {
         tbBrandMapper.updateBrand(tbBrand);
     }
+
+    @Override
+    public void deleteBrand(long[] longs) {
+        for (long aLong : longs) {
+            tbBrandMapper.deleteBrand(aLong);
+        }
+    }
 }
