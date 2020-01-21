@@ -33,4 +33,34 @@ public interface TbBrandService {
      * @date: 2020/1/21 10:09
      */
     PageResult<TbBrand> findPage(int page, int size);
+
+    /**
+     * @param tbBrand:
+     * @return void
+     * @Title: insertBrand
+     * @Description: 添加品牌
+     * @author: itXiaoKe
+     * @date: 2020/1/21 13:49
+     */
+    void insertBrand(TbBrand tbBrand);
+
+    /**
+     * @param id:
+     * @return com.pinyougou.pojo.TbBrand
+     * @Title: findSingleBrand
+     * @Description: 根据id查询单个商品
+     * @author: itXiaoKe
+     * @date: 2020/1/21 14:44
+     */
+    TbBrand findSingleBrand(long id);
+
+    /**
+     * @param tbBrand:
+     * @return void
+     * @Title: updateBrand
+     * @Description: 修改品牌信息
+     * @author: itXiaoKe
+     * @date: 2020/1/21 16:21
+     */
+    void updateBrand(TbBrand tbBrand);
 }

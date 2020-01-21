@@ -37,4 +37,19 @@ public class TbBrandServiceImpl implements TbBrandService {
         Page<TbBrand> pageReturn = (Page<TbBrand>) tbBrandMapper.findAll();
         return new PageResult<>(pageReturn.getTotal(), pageReturn.getResult());
     }
+
+    @Override
+    public void insertBrand(TbBrand tbBrand) {
+        tbBrandMapper.insertBrand(tbBrand);
+    }
+
+    @Override
+    public TbBrand findSingleBrand(long id) {
+        return tbBrandMapper.findSingleBrand(id);
+    }
+
+    @Override
+    public void updateBrand(TbBrand tbBrand) {
+        tbBrandMapper.updateBrand(tbBrand);
+    }
 }
