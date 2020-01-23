@@ -14,83 +14,10 @@
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="../plugins/angularjs/angular.min.js"></script>
     <script src="../plugins/angularjs/pagination.js"></script>
-
-    <script type="text/javascript">
-
-        var app = angular.module('pyg', ['pagination']);
-        app.controller('brandController', function ($scope, $http) {
-            // 重新加载列表 数据
-            $scope.reloadList = function () {
-                // 切换页码
-                $scope.findPage($scope.paginationConf.currentPage,
-                    $scope.paginationConf.itemsPerPage);
-            };
-            // 分页控件配置
-            $scope.paginationConf = {
-                currentPage: 1,
-                totalItems: 10,
-                itemsPerPage: 10,
-                perPageOptions: [10, 20, 30, 40, 50],
-                onChange: function () {
-                    $scope.reloadList();    // 重新加载
-                }
-            };
-            // 分页
-            $scope.findPage = function (page, rows) {
-                $http.get('../brand/findPage/' + page + '/' + rows).success(
-                    function (response) {
-                        $scope.brandList = response.rows;
-                        $scope.paginationConf.totalItems = response.total;  // 更新总记录数
-                    }
-                );
-            };
-
-            // 添加品牌
-            var brand = {};
-            $scope.saveBrand = function () {
-                var methodName = "insertBrand";
-                if (null != $scope.brand.id) {
-                    methodName = "updateBrand";
-                }
-
-                $http.post('../brand/' + methodName, $scope.brand).success(function (res) {
-                    if (res.success) {
-                        $scope.reloadList();
-                    } else {
-                        alert(res.message);
-                    }
-                })
-            };
-
-            // 修改数据回显
-            $scope.findSingleBrand = function (id) {
-                $http.post('../brand/findSingleBrand/' + id).success(function (res) {
-                    $scope.brand = res;
-                })
-            };
-
-            $scope.selectIds = [];
-            // 更新复选
-            $scope.updateSelection = function ($event, id) {
-                if ($event.target.checked) {    // 如果被选中，则增加到数组
-                    $scope.selectIds.push(id);
-                } else {
-                    var index = $scope.selectIds.indexOf(id);
-                    $scope.selectIds.splice(index, 1);  // 删除
-                }
-            };
-
-            $scope.delete = function () {
-                $http.get('../brand/deleteBrand/' + $scope.selectIds).success(function (res) {
-                    alert(res.message);
-                    if (res.success) {
-                        $scope.reloadList();
-                        $scope.selectIds=[];
-                    }
-                })
-            }
-        })
-    </script>
+    <script src="../js/base_pagination.js"></script>
+    <script src="../js/controller/baseController.js"></script>
+    <script src="../js/controller/barndController.js"></script>
+    <script src="../js/service/brandService.js"></script>
 
 </head>
 <body class="hold-transition skin-red sidebar-mini" ng-app="pyg" ng-controller="brandController">
