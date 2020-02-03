@@ -1,64 +1,31 @@
 package com.pinyougou.mapper;
 
 import com.pinyougou.pojo.TbBrand;
+import com.pinyougou.pojo.TbBrandExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * @ClassName: TbBrandMapper
- * @author: itXiaoKe
- * @date: 2020/1/19 11:37
- * @Description: 操作品牌的接口
- * @Version: 1.0
- */
 public interface TbBrandMapper {
-    /**
-     * @param :
-     * @return java.util.List<com.pinyougou.pojo.TbBrand>
-     * @Title: findAll
-     * @Description: 查询所有品牌
-     * @author: itXiaoKe
-     * @date: 2020/1/19 11:39
-     */
-    List<TbBrand> findAll();
+    int countByExample(TbBrandExample example);
 
-    /**
-     * @param tbBrand:
-     * @return void
-     * @Title: insertBrand
-     * @Description: 添加品牌
-     * @author: itXiaoKe
-     * @date: 2020/1/21 13:43
-     */
-    void insertBrand(TbBrand tbBrand);
+    int deleteByExample(TbBrandExample example);
 
-    /**
-     * @param id:
-     * @return com.pinyougou.pojo.TbBrand
-     * @Title: findSingleBrand
-     * @Description: 根据id查询单个商品
-     * @author: itXiaoKe
-     * @date: 2020/1/21 15:04
-     */
-    TbBrand findSingleBrand(long id);
+    int deleteByPrimaryKey(Long id);
 
-    /**
-     * @param tbBrand:
-     * @return void
-     * @Title: updateBrand
-     * @Description: 修改品牌信息
-     * @author: itXiaoKe
-     * @date: 2020/1/21 16:21
-     */
-    void updateBrand(TbBrand tbBrand);
+    int insert(TbBrand record);
 
-    /**
-     * @param aLong:
-     * @return void
-     * @Title: deleteBrand
-     * @Description: 删除品牌
-     * @author: itXiaoKe
-     * @date: 2020/1/21 17:14
-     */
-    void deleteBrand(long aLong);
+    int insertSelective(TbBrand record);
+
+    List<TbBrand> selectByExample(TbBrandExample example);
+
+    TbBrand selectByPrimaryKey(Long id);
+
+    int updateByExampleSelective(@Param("record") TbBrand record, @Param("example") TbBrandExample example);
+
+    int updateByExample(@Param("record") TbBrand record, @Param("example") TbBrandExample example);
+
+    int updateByPrimaryKeySelective(TbBrand record);
+
+    int updateByPrimaryKey(TbBrand record);
 }

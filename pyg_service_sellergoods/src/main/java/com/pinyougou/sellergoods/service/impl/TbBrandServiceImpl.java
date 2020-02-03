@@ -28,35 +28,35 @@ public class TbBrandServiceImpl implements TbBrandService {
 
     @Override
     public List<TbBrand> findAll() {
-        return tbBrandMapper.findAll();
+        return tbBrandMapper.selectByExample(null);
     }
 
     @Override
     public PageResult<TbBrand> findPage(int page, int size) {
         PageHelper.startPage(page, size);
-        Page<TbBrand> pageReturn = (Page<TbBrand>) tbBrandMapper.findAll();
+        Page<TbBrand> pageReturn = (Page<TbBrand>) tbBrandMapper.selectByExample(null);
         return new PageResult<>(pageReturn.getTotal(), pageReturn.getResult());
     }
 
     @Override
     public void insertBrand(TbBrand tbBrand) {
-        tbBrandMapper.insertBrand(tbBrand);
+        tbBrandMapper.insert(tbBrand);
     }
 
     @Override
     public TbBrand findSingleBrand(long id) {
-        return tbBrandMapper.findSingleBrand(id);
+        return tbBrandMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public void updateBrand(TbBrand tbBrand) {
-        tbBrandMapper.updateBrand(tbBrand);
+        tbBrandMapper.updateByPrimaryKey(tbBrand);
     }
 
     @Override
     public void deleteBrand(long[] longs) {
         for (long aLong : longs) {
-            tbBrandMapper.deleteBrand(aLong);
+            tbBrandMapper.deleteByPrimaryKey(aLong);
         }
     }
 }
