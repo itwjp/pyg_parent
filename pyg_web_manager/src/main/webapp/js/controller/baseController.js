@@ -26,4 +26,14 @@ app.controller('baseController', function ($scope, $http) {
             $scope.selectIds.splice(index, 1);  // 删除
         }
     };
+
+    // 字符串转 JSON 的工具方法
+    $scope.String2Json = function (str, key) {
+        let parse = JSON.parse(str);
+        let arr = new Array();
+        for (let i = 0; i < parse.length; i++) {
+            arr.push(parse[i][key]);
+        }
+        return arr.join();
+    }
 });
