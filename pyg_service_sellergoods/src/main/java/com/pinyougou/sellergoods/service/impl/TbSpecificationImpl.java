@@ -55,7 +55,7 @@ public class TbSpecificationImpl implements TbSpecificationService {
             tbSpecificationMapper.insert(tbSpecification);
             // 将主键设置到规格从表中，保存规格从表数据
             for (TbSpecificationOption tbSpecificationOption : optionList) {
-                tbSpecificationOption.setSpecId(id);
+                tbSpecificationOption.setSpecId(tbSpecification.getId());
                 tbSpecificationOptionMapper.insert(tbSpecificationOption);
             }
         } else {
@@ -93,6 +93,12 @@ public class TbSpecificationImpl implements TbSpecificationService {
     @Override
     public void deleteSpecification(long[] longs) {
         for (long aLong : longs) {
+            TbSpecificationOptionExample optionExample = new TbSpecificationOptionExample();
+            TbSpecificationOptionExample.Criteria criteria = optionExample.createCriteria();
+            criteria.andSpecIdEqualTo(aLong);
+            // 删除从表数据
+            tbSpecificationOptionMapper.deleteByExample(optionExample);
+            // 删除主表数据
             tbSpecificationMapper.deleteByPrimaryKey(aLong);
         }
     }
