@@ -24,6 +24,9 @@
     <script src="../js/controller/baseController.js"></script>
     <script src="../js/controller/typeTemplateController.js"></script>
     <script src="../js/service/typeTemplateService.js"></script>
+    <script src="../js/service/brandService.js"></script>
+    <script src="../js/service/specificationService.js"></script>
+    <script src="../plugins/select2/angular-select2.js"></script>
 
 </head>
 
@@ -46,7 +49,9 @@
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
                             data-target="#editModal"><i class="fa fa-file-o"></i> 新建
                     </button>
-                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="删除" ng-click="dele()"><i
+                            class="fa fa-trash-o"></i> 删除
+                    </button>
 
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
                             class="fa fa-refresh"></i> 刷新
@@ -79,7 +84,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="template in list">
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" ng-click="updateSelection($event,template.id)"></td>
                 <td>{{template.id}}</td>
                 <td>{{template.name}}</td>
                 <td>{{String2Json(template.brandIds,'text')}}</td>
@@ -114,18 +119,22 @@
                 <table class="table table-bordered table-striped" width="800px">
                     <tr>
                         <td>商品类型</td>
-                        <td><input class="form-control" placeholder="商品类型"></td>
+                        <td><input class="form-control" placeholder="商品类型" ng-model="entity.name"></td>
                     </tr>
                     <tr>
                         <td>关联品牌</td>
                         <td>
-
+                            <input select2 select2-model="entity.brandIds" config="brandList" style="width:200px"
+                                   type="text" multiple class="form-control" placeholder="选择品牌（可多选）"
+                                   ng-init="findBrandList()"/>
                         </td>
                     </tr>
                     <tr>
                         <td>关联规格</td>
                         <td>
-
+                            <input select2 select2-model="entity.specIds" config="specList" style="width:200px"
+                                   type="text" multiple class="form-control" placeholder="选择规格（可多选）"
+                                   ng-init="findSpecList()"/>
                         </td>
                     </tr>
 
@@ -133,7 +142,7 @@
                         <td>扩展属性</td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default" title="新增扩展属性"><i
+                                <button type="button" class="btn btn-default" title="新增扩展属性" ng-click="insertRow()"><i
                                         class="fa fa-file-o"></i> 新增扩展属性
                                 </button>
 
@@ -147,20 +156,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr ng-repeat="customAttr in entity.customAttributeItems">
                                     <td><input type="checkbox" class="icheckbox_square-blue"></td>
-                                    <td><input class="form-control" placeholder="属性名称"></td>
+                                    <td><input class="form-control" placeholder="属性名称" ng-model="customAttr.text"></td>
                                     <td>
-                                        <button type="button" class="btn btn-default" title="删除"><i
-                                                class="fa fa-trash-o"></i> 删除
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="icheckbox_square-blue"></td>
-                                    <td><input class="form-control" placeholder="属性名称"></td>
-                                    <td>
-                                        <button type="button" class="btn btn-default" title="删除"><i
+                                        <button type="button" class="btn btn-default" title="删除"
+                                                ng-click="deleteRow($index)"><i
                                                 class="fa fa-trash-o"></i> 删除
                                         </button>
                                     </td>
@@ -175,7 +176,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="save()">保存</button>
                 <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>

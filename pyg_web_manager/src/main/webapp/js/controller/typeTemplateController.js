@@ -1,5 +1,5 @@
 //控制层
-app.controller('typeTemplateController', function ($scope, $controller, typeTemplateService) {
+app.controller('typeTemplateController', function ($scope, $controller, typeTemplateService, brandService, specificationService) {
 
     $controller('baseController', {$scope: $scope});//继承
 
@@ -74,5 +74,33 @@ app.controller('typeTemplateController', function ($scope, $controller, typeTemp
                 $scope.paginationConf.totalItems = response.total;//更新总记录数
             }
         );
-    }
+    };
+
+    //关联品牌
+    $scope.brandList = {data: []};
+    $scope.findBrandList = function () {
+        brandService.findAll().success(function (res) {
+            $scope.brandList.data = res;
+        })
+    };
+
+    // 关联规格
+    $scope.specList = {data: []};
+    $scope.findSpecList = function () {
+        specificationService.findAll().success(function (res) {
+            $scope.specList.data = res;
+        })
+    };
+
+    // 新增扩展属性
+    // 初始化保存自定义属性的数组
+    $scope.entity = {customAttributeItems: []};
+    $scope.insertRow = function () {
+        $scope.entity.customAttributeItems.push({});
+    };
+
+    // 删除扩展属性
+    $scope.deleteRow = function (index) {
+        $scope.entity.customAttributeItems.splice(index, 1);
+    };
 });	
