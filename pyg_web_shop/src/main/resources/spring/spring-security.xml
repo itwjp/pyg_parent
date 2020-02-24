@@ -49,7 +49,9 @@
 
     <!-- 在内存中临时提供用户名和密码的数据 -->
     <security:authentication-manager>
-        <security:authentication-provider user-service-ref="userDetailService"/>
+        <security:authentication-provider user-service-ref="userDetailService">
+            <security:password-encoder ref="bCryptPasswordEncoder"/>
+        </security:authentication-provider>
     </security:authentication-manager>
 
     <dubbo:application name="pinyougou-web-shop"/>
@@ -59,4 +61,6 @@
     <bean id="userDetailService" class="com.pinyougou.shop.service.UserDetailServiceImpl">
         <property name="sellerService" ref="sellerService"></property>
     </bean>
+
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 </beans>
