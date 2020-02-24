@@ -41,7 +41,12 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public PageResult findPage(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        Page<TbSeller> page = (Page<TbSeller>) sellerMapper.selectByExample(null);
+        TbSellerExample example = new TbSellerExample();
+        Criteria criteria = example.createCriteria();
+        // 0 表示未审核
+        String status = "0";
+        criteria.andStatusEqualTo(status);
+        Page<TbSeller> page = (Page<TbSeller>) sellerMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
     }
 
@@ -163,6 +168,13 @@ public class SellerServiceImpl implements SellerService {
 
         Page<TbSeller> page = (Page<TbSeller>) sellerMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    public void auditSeller(String sellerId, String status) {
+        TbSeller tbSeller = sellerMapper.selectByPrimaryKey(sellerId);
+        tbSeller.setStatus(status);
+        sellerMapper.updateByPrimaryKey(tbSeller);
     }
 
 }
