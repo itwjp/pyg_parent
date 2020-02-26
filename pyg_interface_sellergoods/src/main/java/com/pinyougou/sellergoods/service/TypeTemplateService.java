@@ -4,6 +4,7 @@ import com.pinyougou.pojo.TbTypeTemplate;
 import com.pinyougou.utils.PageResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 服务层接口
@@ -65,4 +66,13 @@ public interface TypeTemplateService {
      */
     public PageResult findPage(TbTypeTemplate typeTemplate, int pageNum, int pageSize);
 
+    /**
+     * @param id:
+     * @return java.util.List<java.util.Map>
+     * @Title: findSpecAndOptions
+     * @Description: 查询规格
+     * @author: itXiaoKe
+     * @date: 2020/2/26 17:33
+     */
+    List<Map> findSpecAndOptions(Long id);
 }

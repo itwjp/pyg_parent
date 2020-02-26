@@ -1,9 +1,13 @@
 package com.pinyougou.sellergoods.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.pinyougou.mapper.TbSpecificationOptionMapper;
 import com.pinyougou.mapper.TbTypeTemplateMapper;
+import com.pinyougou.pojo.TbSpecificationOption;
+import com.pinyougou.pojo.TbSpecificationOptionExample;
 import com.pinyougou.pojo.TbTypeTemplate;
 import com.pinyougou.pojo.TbTypeTemplateExample;
 import com.pinyougou.pojo.TbTypeTemplateExample.Criteria;
@@ -13,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 服务实现层
@@ -25,6 +30,9 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
     @Autowired
     private TbTypeTemplateMapper typeTemplateMapper;
+
+    @Autowired
+    private TbSpecificationOptionMapper specificationOptionMapper;
 
     /**
      * 查询全部
@@ -108,6 +116,21 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
         Page<TbTypeTemplate> page = (Page<TbTypeTemplate>) typeTemplateMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    public List<Map> findSpecAndOptions(Long id) {
+        TbTypeTemplate tbTypeTemplate = typeTemplateMapper.selectByPrimaryKey(id);
+        String specIds = tbTypeTemplate.getSpecIds();
+        List<Map> mapList = JSON.parseArray(specIds, Map.class);
+        for (Map map : mapList) {
+            TbSpecificationOptionExample example = new TbSpecificationOptionExample();
+            TbSpecificationOptionExample.Criteria criteria = example.createCriteria();
+            criteria.andSpecIdEqualTo(Long.valueOf(String.valueOf(map.get("id"))));
+            List<TbSpecificationOption> optionList = specificationOptionMapper.selectByExample(example);
+            map.put("options", optionList);
+        }
+        return mapList;
     }
 
 }

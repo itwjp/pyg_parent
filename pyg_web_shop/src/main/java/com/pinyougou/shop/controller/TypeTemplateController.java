@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -119,6 +120,19 @@ public class TypeTemplateController {
     @RequestMapping("/search/{page}/{rows}")
     public PageResult search(@RequestBody TbTypeTemplate typeTemplate, @PathVariable("page") int page, @PathVariable("rows") int rows) {
         return typeTemplateService.findPage(typeTemplate, page, rows);
+    }
+
+    /**
+     * @param id:
+     * @return java.util.List<java.util.Map>
+     * @Title: findSpecAndOptions
+     * @Description: 查询规格
+     * @author: itXiaoKe
+     * @date: 2020/2/26 17:33
+     */
+    @RequestMapping("/findSpecAndOptions/{id}")
+    public List<Map> findSpecAndOptions(@PathVariable("id") Long id) {
+        return typeTemplateService.findSpecAndOptions(id);
     }
 
 }
