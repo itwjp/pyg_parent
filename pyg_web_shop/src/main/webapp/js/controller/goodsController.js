@@ -216,5 +216,27 @@ app.controller('goodsController', function ($scope, $controller, goodsService, i
             }
         }
         return newList;
+    };
+
+    // 是否启用规格点击时清空数据
+    $scope.initSpecAndItemList = function () {
+        $scope.entity.goodsDesc.specificationItems = [];
+        $scope.entity.itemList = [{spec: {}, price: 0, num: 99999, status: '0', isDefault: '0'}];
+    };
+
+    // 保存审核状态的数组
+    $scope.auditStatusList = ['未审核', '已审核', '审核未通过', '关闭']
+
+    // 分类菜单
+    $scope.itemCatNameList = [];
+    $scope.findItemCatList = function () {
+        itemCatService.findAll().success(function (res) {
+            if (res != null) {
+                for (let i = 0; i < res.length; i++) {
+                    $scope.itemCatNameList[res[i].id] = res[i].name;
+                }
+            }
+        })
+
     }
 });
